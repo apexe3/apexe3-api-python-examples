@@ -33,6 +33,7 @@ if __name__ == "__main__":
     init()
     #Change parameters as desired -run supported-asset-markets-exchanges.js file for a list of supported markets / exchanges
     #This endpoint is currently limited to COINBASEPRO and FTX for the free tier
-    table=pd.DataFrame(fetch_OHLCV_for_exchange('COINBASEPRO','BTC','USD','01-01-2018','31-12-2020','1d'))
+    
+    table=pd.DataFrame(fetch_OHLCV_for_exchange('COINBASEPRO','BTC','USD','01-01-2018','31-12-2020','1d', 'DIGITAL', 'SPOT'))
     table.columns = ['Time', 'Open', 'High', 'Low', 'Close', 'Volume']
     print(table)

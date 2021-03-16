@@ -1,8 +1,8 @@
 var keycloakUrl = "https://keycloak.ae3platform.com/auth/realms/ApexE3/protocol/openid-connect/token";
 var betaUrl = "https://app.ae3platform.com/";
-var apiRestURL = "https://api.ae3platform.com/";
-var ohlcvRestApiUrl = "https://api.apexe3.ai/__/data-service/fetchOHLCV";
-var ohlcvRestTwoAssetsApiUrl = "https://api.apexe3.ai/__/data-service/fetchOHLCVTwoAssets";
+var apiRestURL = "https://www.ae3platform.com/";
+var ohlcvRestApiUrl = "https://www.apexe3.ai/__/data-service/fetchOHLCV";
+var ohlcvRestTwoAssetsApiUrl = "https://www.apexe3.ai/__/data-service/fetchOHLCVTwoAssets";
 const INVALID_CREDS_MESSAGE = [['Your APEX:E3 Client Id or Client Secret is invalid. You need valid credentials to recieve data.']];
 
 /**

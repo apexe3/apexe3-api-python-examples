@@ -658,7 +658,7 @@ module.exports = {
    * @param {*} to 
    * @param {*} timeFrame 
    */
-  async fetchOHLCVForExchange(exchange, base, quote, from, to, timeFrame) {
+  async fetchOHLCVForExchange(exchange, base, quote, from, to, timeFrame, assetType, marketType) {
 
     try {
 
@@ -667,7 +667,7 @@ module.exports = {
         return null;
       } else { }
 
-      var params = 'exchange=' + exchange + '&base=' + base + '&quote=' + quote + '&from=' + from + '&to=' + to + '&timeFrame=' + timeFrame;
+      var params = 'exchange=' + exchange + '&base=' + base + '&quote=' + quote + '&from=' + from + '&to=' + to + '&timeFrame=' + timeFrame + '&assetType=' + assetType + '&marketType=' + marketType;
       var url = ohlcvExchangeRestApiUrl + '?' + params;
       var creds = getOptions(this.accessToken);
       var response = await fetch(url, creds);

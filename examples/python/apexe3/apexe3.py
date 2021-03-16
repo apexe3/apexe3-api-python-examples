@@ -38,11 +38,11 @@ authUrl = "https://keycloak.ae3platform.com/auth/realms/ApexE3/protocol/openid-c
 requestApiUrl = "https://api.ae3platform.com"
 websocketUrl = "wss://ws.ae3platform.com"
 appUrl = "https://app.ae3platform.com/"
-ohlcvRestApiUrl = "https://api.apexe3.ai/__/data-service/fetchOHLCV"
-ohlcvRestTwoAssetsApiUrl = "https://api.apexe3.ai/__/data-service/fetchOHLCVTwoAssets"
-ohlcvExchangeRestApiUrl = "https://api.apexe3.ai/__/data-service/fetchOHLCVHistory"
-backtestingRestApiUrl = "https://api.apexe3.ai/__/backtesting-service/runBacktest"
-marketCapRestApiUrl = "http://api.apexe3.ai/__/data-service/fetchMarketCap"
+ohlcvRestApiUrl = "https://www.apexe3.ai/__/data-service/fetchOHLCV"
+ohlcvRestTwoAssetsApiUrl = "https://www.apexe3.ai/__/data-service/fetchOHLCVTwoAssets"
+ohlcvExchangeRestApiUrl = "https://www.apexe3.ai/__/data-service/fetchOHLCVHistory"
+backtestingRestApiUrl = "https://www.apexe3.ai/__/backtesting-service/runBacktest"
+marketCapRestApiUrl = "https://www.apexe3.ai/__/data-service/fetchMarketCap"
 accessToken = ""
 assetIdToCannonicalId = {}
 globalOrderbookBids = []    #in-memory global orderbook of bids
@@ -512,13 +512,13 @@ def fetch_aggregated_OHLCV(asset,fromDate,to,interval):
 
 
 '''
-def fetch_OHLCV_for_exchange(exchange,base,quote,fromDate,to,timeFrame):
+def fetch_OHLCV_for_exchange(exchange,base,quote,fromDate,to,timeFrame, assetType,marketType):
     global accessToken
 
     if(accessToken=='' or accessToken==None):
         return [['Invalid credentials']]
 
-    params = 'exchange='+exchange+'&base='+base+'&quote='+quote+'&from='+fromDate+'&to='+to+'&timeFrame='+timeFrame
+    params = 'exchange='+exchange+'&base='+base+'&quote='+quote+'&from='+fromDate+'&to='+to+'&timeFrame='+timeFrame+'&assetType='+assetType+'&marketType='+marketType
     url = ohlcvExchangeRestApiUrl + '?' + params
     headersVal = { "Authorization": "bearer " + accessToken }
     response = requests.get(url, headers=headersVal)
@@ -565,7 +565,7 @@ def fetch_marketcap_for_crypto_symbol(symbol, fromDate, to):
    * @param {*} stategyParams 
    */
 '''
-def run_backtest(startingCapital, exchange, base, quote, fromDate, to, indicatorParams, strategyParams, timeFrame, isMultiStrategy): 
+def run_backtest(startingCapital, exchange, base, quote, fromDate, to, indicatorParams, strategyParams, timeFrame, isMultiStrategy, assetType, marketType): 
     global accessToken
 
     if(accessToken=='' or accessToken==None):
@@ -776,7 +776,10 @@ def run_backtest(startingCapital, exchange, base, quote, fromDate, to, indicator
             + '&shortExitOperator=' + shortExitOperator
             + '&shortExitIndicator2=' + shortExitIndicator2
 
-            + '&stopLoss=' + stopLoss)
+            + '&stopLoss=' + stopLoss
+            
+            + '&marketType=' + marketType
+            + '&assetType=' + assetType)
 
     url = backtestingRestApiUrl + '?' + params
     headersVal = { "Authorization": "bearer " + accessToken }

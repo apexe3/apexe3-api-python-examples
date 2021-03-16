@@ -18,15 +18,15 @@
 const apexe3 = require('./apexe3/apexe3');
 const cTable = require('console.table');
 	
-const clientId = "Your-ClientId-Goes-Here";
-const clientSecret = "Your-Client-Secret-Goes-Here";
+const clientId = "dapi-astrosbadhabits-gmail-com";
+const clientSecret = "e64611c4-8237-44d7-a78a-53128f94cd9f";
 
 (async () => {
    
     await apexe3.initialise(clientId, clientSecret);
     //Change parameters as desired -run supported-asset-markets-exchanges.js file for a list of supported markets / exchanges
     //This endpoint is currently limited to COINBASEPRO and FTX for the free tier
-    const ohlcv = await apexe3.fetchOHLCVForExchange('COINBASEPRO','BTC','USD','01-01-2018','31-12-2020','1d');
+    const ohlcv = await apexe3.fetchOHLCVForExchange('COINBASEPRO','BTC','USD','01-01-2018','31-12-2020','1d', 'DIGITAL', 'SPOT');
    
     console.table(['Time','Open','High','Low', 'Close', 'Volume'],ohlcv);
    
