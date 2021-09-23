@@ -20,8 +20,8 @@
 const apexe3 = require('./apexe3/apexe3');
 const cTable = require('console.table');
 
-const clientId = "Your-ClientId-Goes-Here";
-const clientSecret = "Your-Client-Secret-Goes-Here";
+const clientId = "Enter client id here";
+const clientSecret = "Enter client secret here";
 
 
 (async () => {

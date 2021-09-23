@@ -18,12 +18,14 @@
 const apexe3 = require('./apexe3/apexe3');
 const cTable = require('console.table');
 
-const clientId = "Your-ClientId-Goes-Here";
-const clientSecret = "Your-Client-Secret-Goes-Here";
+const clientId = "Enter API client Id here";
+const clientSecret = "Enter API client secret here";
+const username = "Enter username here";
+const password = "Enter password here";
 
 (async () => {
    
-    await apexe3.initialise(clientId, clientSecret);
+    await apexe3.initialise(clientId, clientSecret, username, password);
     //Change these values to a ticker you are interested in -see the supportedAssetIdsForAggregateOHLCV folder for searchable tickers
     let ohlcv = await apexe3.fetchAggregatedOHLCV('BTC-USD', '01-01-2018','31-12-2020','');
    

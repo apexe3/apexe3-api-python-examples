@@ -19,11 +19,13 @@
 
 const apexe3 = require('./apexe3/apexe3');
 
-const clientId = "Your-ClientId-Goes-Here";
-const clientSecret = "Your-Client-Secret-Goes-Here";
+const clientId = "Enter API client Id here";
+const clientSecret = "Enter API client secret here";
+const username = "Enter username here";
+const password = "Enter password here";
 
 (async () => {
-    await apexe3.initialise(clientId, clientSecret);
+    await apexe3.initialise(clientId, clientSecret, username, password);
     const stats = await screenPair('BTC','USDT');
     console.table(stats, ['exchangeId','baseId', 'quoteId', 'v24HrChg','v30dChg','v24HrVsV30dSum','p15MinChg','p1HrChg','p7dChg','pLast']);
 

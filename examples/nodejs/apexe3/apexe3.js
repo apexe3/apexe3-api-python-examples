@@ -21,7 +21,8 @@ const WebSocket = require('ws');
 const { Base64 } = require('js-base64');
 const { emit } = require('process');
 const emitter = require('events').EventEmitter;
-const authUrl = 'https://keycloak.ae3platform.com/auth/realms/ApexE3/protocol/openid-connect/token';
+//const authUrl = 'https://keycloak.ae3platform.com/auth/realms/ApexE3/protocol/openid-connect/token';
+const authUrl = 'https://apexe3.ai/auth/realms/ApexE3/protocol/openid-connect/token'
 const requestApiUrl = 'https://api.ae3platform.com';
 const websocketUrl = 'wss://ws.ae3platform.com';
 const appUrl = "https://app.ae3platform.com/";
@@ -107,11 +108,14 @@ module.exports = {
    * Authenticates and retrieves the autentication token used by subsequent calls 
    * 
    * @param {*} clientId 
-   * @param {*} clientSecret 
+   * @param {*} clientSecret
+   * @param {*} username
+   * @param {*} password
+   *  
    */
-  async initialise(clientId, clientSecret) {
+  async initialise(clientId, clientSecret, username, password) {
 
-    this.accessToken = await this.obtainAccessToken(clientId, clientSecret);
+    this.accessToken = await this.obtainAccessToken(clientId, clientSecret, username, password);
     await this.initialiseAssetIdToCannonicalId();
 
   },
@@ -119,23 +123,34 @@ module.exports = {
    * Uses the supplied parameters to authenticate and obtain a valid JWT token
    * 
    * @param {*} clientId 
-   * @param {*} clientSecret 
+   * @param {*} clientSecret
+   * @param {*} username
+   * @param {*} password 
    */
-  async obtainAccessToken(clientId, clientSecret) {
+  async obtainAccessToken(clientId, clientSecret, username, password) {
 
     console.log(`--------- Authenticating ---------\n\n`);
     const data = new URLSearchParams();
-    data.append('grant_type', 'client_credentials');
+    data.append('grant_type', 'password');
     data.append('client_id', clientId);
     data.append('client_secret', clientSecret);
+    data.append('scope', 'openid');
+    data.append('username', username);
+    data.append('password', password);
+
+    // let dataItem = clientId+':'+clientSecret;
+    // let buff = new Buffer(dataItem);
+    // let base64data = buff.toString('base64');
+    // console.log('Authorization'+'Basic '+base64data)
+
     const authRespose = await fetch(authUrl, {
       method: "POST",
       body: data,
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Origin: "*",
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
     });
+    console.log(authRespose);
     const accessToken = await authRespose.json().then((v) => v.access_token);
     console.log('--------- Authentication Token Obtained ---------\n\n');
     console.log(accessToken);
@@ -197,8 +212,11 @@ module.exports = {
    */
   async fetchExchangesForPair(base, quote) {
 
-    base = convertSymbolPart(base);
-    quote = convertSymbolPart(quote);
+    // base = convertSymbolPart(base);
+    // quote = convertSymbolPart(quote);
+    base = base+':CRYPTO';
+    quote = quote + ':CRYPTO';
+    
 
     const supportedMarkets = await this.fetchReferenceData('/reference/markets');
 
@@ -738,14 +756,14 @@ module.exports = {
 
       let indicator1 = indicatorParams.indicator1;
       let indicator2 = indicatorParams.indicator2;
-
+      //TODO - change timeframe back to 1d default..
       var params =
         'exchange=' + exchange
         + '&base=' + base
         + '&quote=' + quote
         + '&from=' + from
         + '&to=' + to
-        + '&timeFrame=1d'
+        + '&timeFrame=1m'
         + '&startingCapital=' + startingCapital
         + '&indicator1.type=' + indicator1.type
         + '&indicator1.period=' + indicator1.period
@@ -985,8 +1003,14 @@ function updateLiveLiquidity(parsedMsg) {
  * @param {*} ichimoku 
  */
 async function screen(base, quote, exchanges, rsi, smaCross, volatility, weeklyOpenChg, bollingerBand, fibRetracements, trends, ichimoku) {
-  base = convertSymbolPart(base);
-  quote = convertSymbolPart(quote);
+  // base = convertSymbolPart(base);
+  // quote = convertSymbolPart(quote);
+
+  base = base+':CRYPTO';
+  quote = quote + ':CRYPTO';
+  
+
+  console.log(base, quote);
 
   var url = appUrl + "graphql";
 

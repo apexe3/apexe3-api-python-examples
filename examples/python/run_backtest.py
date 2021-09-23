@@ -27,9 +27,11 @@ import json
 import pandas as pd
 
 def init():
-    clientId = "your-client-id-goes-here"
-    clientSecret = "your-client-secret-goes-here"
-    initialise(clientId, clientSecret)
+    clientId = "Enter API client Id here"
+    clientSecret = "Enter API secret here"
+    username = "Enter username here"
+    password = "Enter password here"
+    initialise(clientId, clientSecret, username, password)
 
 if __name__ == "__main__":
     init()
@@ -68,7 +70,7 @@ if __name__ == "__main__":
     }
 
     
-    result = run_backtest('10000', 'COINBASEPRO', 'BTC', 'USD', '2018-01-01', '2020-12-31', indicatorParams, strategyParams,'1d','','DIGITAL','SPOT')
+    result = run_backtest('10000', 'COINBASEPRO', 'BTC', 'USD', '2018-01-01', '2021-09-01', indicatorParams, strategyParams,'1m','','DIGITAL','SPOT')
     
     print(result['analysis'])
 

@@ -27,9 +27,11 @@ from apexe3.apexe3 import screen
 import pandas as pd
 
 def init():
-  clientId = "your-client-id-goes-here"
-  clientSecret = "your-client-secret-goes-here"
-  initialise(clientId, clientSecret)
+    clientId = "Enter API client Id here"
+    clientSecret = "Enter API secret here"
+    username = "Enter username here"
+    password = "Enter password here"
+    initialise(clientId, clientSecret, username, password)
   
 #Filter Screen todo think of clearer name
 def screenPair(base,quote):

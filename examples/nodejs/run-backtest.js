@@ -18,12 +18,14 @@
 const apexe3 = require('./apexe3/apexe3');
 const cTable = require('console.table');
 
-const clientId = "Your-ClientId-Goes-Here";
-const clientSecret = "Your-Client-Secret-Goes-Here";
-	
+const clientId = "Enter API client Id here";
+const clientSecret = "Enter API client secret here";
+const username = "Enter username here";
+const password = "Enter password here";
+
 (async () => {
 
-    await apexe3.initialise(clientId, clientSecret);
+    await apexe3.initialise(clientId, clientSecret, username, password);
 
     //Read about how to use this API here:
     //https://intercom.help/apexe3/en/articles/4711970-programmatic-backtesing
@@ -62,8 +64,8 @@ const clientSecret = "Your-Client-Secret-Goes-Here";
     let results = await apexe3.runBacktest(10000, 'COINBASEPRO', 'BTC', 'USD', '2018-01-01', '2020-12-31', indicatorParams, strategyParams, 'DIGITAL', 'SPOT');
 
     console.table(results.analysis);
-    //console.table(results.trades);
-    //console.table(results.marketData);
+    console.table(results.trades);
+    console.table(results.marketData);
 
 
 })();

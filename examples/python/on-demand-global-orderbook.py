@@ -27,9 +27,11 @@ from apexe3.apexe3 import fetch_global_orderbook_for_pair
 import pandas as pd
 
 def init():
-    clientId = "your-client-id-goes-here"
-    clientSecret = "your-client-secret-goes-here"
-    initialise(clientId, clientSecret)
+    clientId = "Enter API client Id here"
+    clientSecret = "Enter API secret here"
+    username = "Enter username here"
+    password = "Enter password here"
+    initialise(clientId, clientSecret, username, password)
 
 if __name__ == "__main__":
     init()

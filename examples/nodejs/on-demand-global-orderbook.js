@@ -20,12 +20,13 @@
 const apexe3 = require('./apexe3/apexe3');
 const cTable = require('console.table');
 
-const clientId = "Your-ClientId-Goes-Here";
-const clientSecret = "Your-Client-Secret-Goes-Here";
-
+const clientId = "Enter API client Id here";
+const clientSecret = "Enter API client secret here";
+const username = "Enter username here";
+const password = "Enter password here";
 (async () => {
    
-    await apexe3.initialise(clientId, clientSecret);
+    await apexe3.initialise(clientId, clientSecret, username, password);
     let globalOrderbook = await apexe3.fetchGlobalOrderbookForPair('BTC', 'USDT', 'SPOT');
    
     console.table(['Exchange', 'Bid Size', 'Bid Price', 'Ask Price', 'Ask Size', 'Exchange'],globalOrderbook);

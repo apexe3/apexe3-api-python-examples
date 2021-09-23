@@ -26,9 +26,11 @@ from apexe3.apexe3 import fetch_marketcap_for_crypto_symbol
 import pandas as pd
 
 def init():
-    clientId = "Your-ClientId-Goes-Here"
-    clientSecret = "Your-Client-Secret-Goes-Here"
-    initialise(clientId, clientSecret)
+    clientId = "Enter API client Id here"
+    clientSecret = "Enter API secret here"
+    username = "Enter username here"
+    password = "Enter password here"
+    initialise(clientId, clientSecret, username, password)
 
 if __name__ == "__main__":
     init()

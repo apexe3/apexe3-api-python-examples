@@ -34,7 +34,8 @@ import ssl
 
 
 
-authUrl = "https://keycloak.ae3platform.com/auth/realms/ApexE3/protocol/openid-connect/token"
+#authUrl = "https://keycloak.ae3platform.com/auth/realms/ApexE3/protocol/openid-connect/token"
+authUrl = 'https://apexe3.ai/auth/realms/ApexE3/protocol/openid-connect/token'
 requestApiUrl = "https://api.ae3platform.com"
 websocketUrl = "wss://ws.ae3platform.com"
 appUrl = "https://app.ae3platform.com/"
@@ -115,14 +116,16 @@ def initialise_assetId_to_cannoicalId():
    * Authenticates and retrieves the autentication token used by subsequent calls 
    * 
    * @param {*} clientId 
-   * @param {*} clientSecret 
+   * @param {*} clientSecret
+   * @param {*} username
+   * @param {*} password 
    */
 '''
-def initialise(clientId, clientSecret):
+def initialise(clientId, clientSecret, username, password):
     global accessToken
     global emitter
-    accessToken = obtain_access_token(clientId, clientSecret)
-    initialise_assetId_to_cannoicalId()
+    accessToken = obtain_access_token(clientId, clientSecret, username, password)
+    #initialise_assetId_to_cannoicalId()
     return emitter
 
 '''
@@ -151,15 +154,20 @@ def convert_symbol_part(part):
     * Uses the supplied parameters to authenticate and obtain a valid JWT token
     * 
     * @param {*} clientId 
-    * @param {*} clientSecret 
+    * @param {*} clientSecret
+    * @param {*} username
+    * @param {*} password  
     */
 '''
-def obtain_access_token(clientId, clientSecret):
+def obtain_access_token(clientId, clientSecret, username, password):
     print("--------- Authenticating ---------\n\n")
     data = {
-        'grant_type': (None, 'client_credentials'),
+        'grant_type': (None, 'password'),
         'client_id': (None, clientId),
         'client_secret': (None, clientSecret),
+        'scope': 'openid',
+        'username' : (None, username),
+        'password' : (None, password)
     }
     r = requests.post(authUrl, data)
     result = r.json()
@@ -212,8 +220,12 @@ def fetch_reference_data(endpointUrlPart):
    */
 '''
 def fetch_exchanges_for_pair(base,quote):
-    base = convert_symbol_part(base)
-    quote = convert_symbol_part(quote)
+    #base = convert_symbol_part(base)
+    #quote = convert_symbol_part(quote)
+    
+    base = base+':CRYPTO'
+    quote = quote + ':CRYPTO'
+    
     markets = fetch_reference_data("/reference/markets")
     for market in markets:
         if(market['b']==base and market['q']==quote and market['f']==''):
@@ -1033,8 +1045,12 @@ def initialise_insights_for_pair(base="BTC:CRYPTO", quote="USDT:CRYPTO"):
    */
 '''
 def screen(base,quote,exchanges=None, rsi=[],smaCross=[],volatility=[], weeklyOpenChg=[], bollingerBand=None, fibRetracements=[], trends=[], ichimoku=[]):
-    base = convert_symbol_part(base)
-    quote = convert_symbol_part(quote)
+    #base = convert_symbol_part(base)
+    #quote = convert_symbol_part(quote)
+    
+    base = base+':CRYPTO'
+    quote = quote + ':CRYPTO'
+
     url = appUrl + "graphql"
   
     query = "query recent($filters: RecentFilters, $sortBy: SortBy) {  recent(filters: $filters, sortBy: $sortBy) {items {hash exchangeId baseId quoteId marketType v30dChg v24HrChg v30dSum v24HrSum p24HrChg p7dChg p15MinChg pLast p1HrChg v24HrVsV30dSum __typename} exchanges quotes bases __typename}}"
